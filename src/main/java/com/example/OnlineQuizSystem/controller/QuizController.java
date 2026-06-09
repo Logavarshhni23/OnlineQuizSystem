@@ -1,6 +1,7 @@
 package com.example.OnlineQuizSystem.controller;
 
 import com.example.OnlineQuizSystem.dto.QuizRequestDTO;
+import com.example.OnlineQuizSystem.dto.QuizResponseDTO;
 import com.example.OnlineQuizSystem.model.Quiz;
 import com.example.OnlineQuizSystem.service.QuizService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,13 +26,13 @@ public class QuizController {
 
     //getAll quizes
     @GetMapping("/get")
-    public List<Quiz> getAllQuiz(){
+    public List<QuizResponseDTO> getAllQuiz(){
         return quizService.getAllQuiz();
     }
 
     //get by id
     @GetMapping("/get/{id}")
-    public Quiz getQuizById(@PathVariable("id") Long id){
+    public QuizResponseDTO getQuizById(@PathVariable("id") Long id){
         return quizService.getQuizById(id);
     }
 
@@ -57,5 +58,6 @@ public class QuizController {
     public CsrfToken gettoken(HttpServletRequest req){
         return (CsrfToken) req.getAttribute("_csrf");
     }
+
 
 }

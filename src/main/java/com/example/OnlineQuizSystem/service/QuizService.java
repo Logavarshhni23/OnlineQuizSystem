@@ -1,6 +1,7 @@
 package com.example.OnlineQuizSystem.service;
 
 import com.example.OnlineQuizSystem.dto.QuizRequestDTO;
+import com.example.OnlineQuizSystem.dto.QuizResponseDTO;
 import com.example.OnlineQuizSystem.model.Quiz;
 import com.example.OnlineQuizSystem.repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +22,32 @@ public class QuizService {
         return q;
     }
 
+    public QuizResponseDTO convertQuizToDTO(Quiz quiz){
+        QuizResponseDTO dto=new QuizResponseDTO();
+        dto.setId(quiz.getId());
+        dto.setTitle(quiz.getTitle());
+        dto.setDescription(quiz.getDescription());
+        return dto;
+    }
+
     public Quiz createQuiz(QuizRequestDTO request) {
         return quizRepository.save(convertDtoTOQuiz(request));
     }
 
-    public List<Quiz> getAllQuiz() {
-        return quizRepository.findAll();
+    public List<QuizResponseDTO> getAllQuiz() {
+        return quizRepository.findAll()
+                .stream()
+                .map(this::convertQuizToDTO)
+                .toList();
     }
 
-    public Quiz getQuizById(Long id) {
-        return quizRepository.findById(id).orElseThrow(()->new RuntimeException("Quiz Not Found"));
+    public QuizResponseDTO getQuizById(Long id) {
+        Quiz quiz= getQuizEntityById(id);
+        return convertQuizToDTO(quiz);
     }
 
     public Quiz updateQuize(Long id, QuizRequestDTO request) {
-        Quiz quiz=getQuizById(id);
+        Quiz quiz=getQuizEntityById(id);
         quiz.setTitle(request.getTitle());
         quiz.setDescription(request.getDescription());
         return quizRepository.save(quiz);
@@ -48,6 +61,11 @@ public class QuizService {
     public String deleteQuizById(Long id) {
         quizRepository.deleteById(id);
         return "deleted successfully";
+    }
+
+    public Quiz getQuizEntityById(Long id) {
+        return quizRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Quiz Not Found"));
     }
 
 }
