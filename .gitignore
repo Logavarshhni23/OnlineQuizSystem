@@ -40,3 +40,12 @@ lombok.config
 
 # ====== Environment files ======
 .env
+
+# ====== Maven wrapper ======
+.mvn/wrapper/maven-wrapper.properties
+
+# ====== GitHub Actions ======
+.github/
+
+# ====== Test output ======
+surefire-reports/

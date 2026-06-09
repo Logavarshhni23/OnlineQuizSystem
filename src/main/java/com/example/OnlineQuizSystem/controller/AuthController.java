@@ -1,8 +1,8 @@
 package com.example.OnlineQuizSystem.controller;
 
+import com.example.OnlineQuizSystem.dto.AuthResponse;
 import com.example.OnlineQuizSystem.dto.LoginRequest;
 import com.example.OnlineQuizSystem.dto.RegisterRequest;
-import com.example.OnlineQuizSystem.model.User;
 import com.example.OnlineQuizSystem.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +16,13 @@ public class AuthController {
 
     //register
     @PostMapping("/register")
-    public User register(@RequestBody RegisterRequest request) {
+    public String register(@RequestBody RegisterRequest request) {
         return authService.register(request);
     }
 
     //login
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+    public AuthResponse login(@RequestBody LoginRequest request) {
         return authService.login(request);
     }
 }
