@@ -21,21 +21,22 @@ public class QuestionService {
         return r.findById(id).orElse(null);
     }
 
-
     public Question addQuestion(Question question) {
         return r.save(question);
     }
 
-
     public Question updateQuestion(Long id, Question updatedQuestion) {
-        Question q = r.findById(id).orElseThrow();
 
-        q.setQuestion(updatedQuestion.getQuestion());
+        Question q = r.findById(id)
+                .orElseThrow(() -> new RuntimeException("Question not found"));
+
+        q.setQuestionText(updatedQuestion.getQuestionText());
         q.setOptionA(updatedQuestion.getOptionA());
         q.setOptionB(updatedQuestion.getOptionB());
         q.setOptionC(updatedQuestion.getOptionC());
         q.setOptionD(updatedQuestion.getOptionD());
-        q.setAnswer(updatedQuestion.getAnswer());
+        q.setCorrectAnswer(updatedQuestion.getCorrectAnswer());
+        q.setQuiz(updatedQuestion.getQuiz());
 
         return r.save(q);
     }
