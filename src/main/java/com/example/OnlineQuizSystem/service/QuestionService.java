@@ -30,12 +30,12 @@ public class QuestionService {
     public Question updateQuestion(Long id, Question updatedQuestion) {
         Question q = r.findById(id).orElseThrow();
 
-        q.setQuestionText(updatedQuestion.getQuestionText());
+        q.setQuestion(updatedQuestion.getQuestion());
         q.setOptionA(updatedQuestion.getOptionA());
         q.setOptionB(updatedQuestion.getOptionB());
         q.setOptionC(updatedQuestion.getOptionC());
         q.setOptionD(updatedQuestion.getOptionD());
-        q.setCorrectAnswer(updatedQuestion.getCorrectAnswer());
+        q.setAnswer(updatedQuestion.getAnswer());
 
         return r.save(q);
     }
