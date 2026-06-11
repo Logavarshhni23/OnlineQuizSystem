@@ -39,9 +39,9 @@ export default function Quiz({ token, userName }) {
       <div className="quiz-page">
         <div className="quiz-box">
           <h2>Quiz Completed!</h2>
-          <p className="quiz-user">👤 {userName}</p>
+          <p className="quiz-user">{userName}</p>
           <p className="score">Your Score: {score} / {questions.length}</p>
-          <p className="quiz-count">{score === questions.length ? '🎉 Perfect Score!' : score >= questions.length / 2 ? '👍 Good Job!' : '📚 Keep Practicing!'}</p>
+          <p className="quiz-count">{score === questions.length ? 'Perfect Score!' : score >= questions.length / 2 ? 'Good Job!' : 'Keep Practicing!'}</p>
         </div>
       </div>
     )
@@ -53,7 +53,7 @@ export default function Quiz({ token, userName }) {
   return (
     <div className="quiz-page">
       <div className="quiz-box">
-        <p className="quiz-user">👤 {userName}</p>
+        <p className="quiz-user">{userName}</p>
         <p className="quiz-count">Question {current + 1} of {questions.length}</p>
         <h2>{q.questionText}</h2>
         <ul className="options">

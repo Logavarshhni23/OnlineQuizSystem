@@ -103,7 +103,7 @@ export default function AdminDashboard({ token }) {
                   <li>C: {q.optionC}</li>
                   <li>D: {q.optionD}</li>
                 </ul>
-                <p className="q-answer">✅ Answer: {q.correctAnswer}</p>
+                <p className="q-answer">Answer: {q.correctAnswer}</p>
                 <button className="delete-btn" onClick={() => handleDelete(q.id)}>Delete</button>
               </div>
             ))}
@@ -118,9 +118,9 @@ export default function AdminDashboard({ token }) {
           {users.length === 0 && <p className="quiz-count">No users registered yet.</p>}
           {users.map((u) => (
             <div key={u.id} className="question-card">
-              <p className="q-text">👤 {u.name}</p>
-              <p className="q-options" style={{color: '#9B30FF'}}>📧 {u.email}</p>
-              <p className="q-answer">🔑 Role: {u.role}</p>
+              <p className="q-text">{u.name}</p>
+              <p className="q-options" style={{color: '#9B30FF'}}>{u.email}</p>
+              <p className="q-answer">Role: {u.role}</p>
             </div>
           ))}
         </div>
