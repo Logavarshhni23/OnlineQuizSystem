@@ -1,5 +1,6 @@
 package com.example.OnlineQuizSystem.security;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,16 +25,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
-            String token = header.substring(7);
-            if (jwtSecurity.isTokenValid(token)) {
-                String email = jwtSecurity.extractEmail(token);
-                String role = jwtSecurity.extractRole(token);
+            try {
+                Claims claims = jwtSecurity.validateToken(header.substring(7));
                 SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(
-                        email, null, List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                        claims.getSubject(), null,
+                        List.of(new SimpleGrantedAuthority("ROLE_" + claims.get("role", String.class)))
                     )
                 );
-            }
+            } catch (Exception ignored) {}
         }
         chain.doFilter(request, response);
     }
