@@ -7,11 +7,11 @@ import com.example.OnlineQuizSystem.model.User;
 import com.example.OnlineQuizSystem.repository.UserRepository;
 import com.example.OnlineQuizSystem.security.JwtSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthService {
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -19,7 +19,8 @@ public class AuthService {
     @Autowired
     private JwtSecurity jwtSecurity;
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     //register
     public String register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {

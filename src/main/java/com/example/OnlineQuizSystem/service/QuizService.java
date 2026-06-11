@@ -5,7 +5,6 @@ import com.example.OnlineQuizSystem.dto.QuizResponseDTO;
 import com.example.OnlineQuizSystem.model.Quiz;
 import com.example.OnlineQuizSystem.repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

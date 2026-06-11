@@ -4,10 +4,7 @@ import com.example.OnlineQuizSystem.dto.QuizRequestDTO;
 import com.example.OnlineQuizSystem.dto.QuizResponseDTO;
 import com.example.OnlineQuizSystem.model.Quiz;
 import com.example.OnlineQuizSystem.service.QuizService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,11 +49,6 @@ public class QuizController {
     @DeleteMapping("/delete/{id}")
     public String deleteQuizByID(@PathVariable Long id){
         return quizService.deleteQuizById(id);
-    }
-
-    @GetMapping("/crsf")
-    public CsrfToken gettoken(HttpServletRequest req){
-        return (CsrfToken) req.getAttribute("_csrf");
     }
 
 

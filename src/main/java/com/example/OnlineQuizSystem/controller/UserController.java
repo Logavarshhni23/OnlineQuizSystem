@@ -3,16 +3,16 @@ package com.example.OnlineQuizSystem.controller;
 import com.example.OnlineQuizSystem.dto.AuthResponse;
 import com.example.OnlineQuizSystem.dto.LoginRequest;
 import com.example.OnlineQuizSystem.dto.RegisterRequest;
-import com.example.OnlineQuizSystem.service.AuthService;
+import com.example.OnlineQuizSystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class UserController {
 
     @Autowired
-    private AuthService authService;
+    private UserService authService;
 
     //register
     @PostMapping("/register")
