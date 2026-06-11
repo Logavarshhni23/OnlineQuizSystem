@@ -24,13 +24,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    public FilterRegistrationBean<JwtAuthFilter> disableAutoRegistration(JwtAuthFilter filter) {
-        FilterRegistrationBean<JwtAuthFilter> bean = new FilterRegistrationBean<>(filter);
-        bean.setEnabled(false);
-        return bean;
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(c -> c.disable())
