@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthResponse {
-    //used to store jwt token
     private String token;
     private String role;
+    private String name;
 }

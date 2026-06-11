@@ -34,7 +34,7 @@ public class Question {
     @NotBlank(message = "Correct answer cannot be empty")
     private String correctAnswer;
 
-    @ManyToOne
-    @JoinColumn(name = "quiz_id")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "quiz_id", nullable = true)
     private Quiz quiz;
 }

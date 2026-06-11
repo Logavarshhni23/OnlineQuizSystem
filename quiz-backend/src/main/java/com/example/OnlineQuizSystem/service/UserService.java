@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -47,13 +50,25 @@ public class UserService {
         if (adminEmail.equals(request.getEmail())) {
             if (!adminPassword.equals(request.getPassword()))
                 throw new RuntimeException("Invalid admin password");
-            return new AuthResponse(jwtSecurity.generateToken(adminEmail, "ADMIN"), "ADMIN");
+            return new AuthResponse(jwtSecurity.generateToken(adminEmail, "ADMIN"), "ADMIN", "Admin");
         }
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
             throw new RuntimeException("Invalid password");
         String token = jwtSecurity.generateToken(user.getEmail(), user.getRole());
-        return new AuthResponse(token, user.getRole());
+        return new AuthResponse(token, user.getRole(), user.getName());
+    }
+
+    //get all users
+    public List<Map<String, Object>> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(u -> Map.of(
+                        "id", (Object) u.getId(),
+                        "name", u.getName(),
+                        "email", u.getEmail(),
+                        "role", u.getRole()
+                ))
+                .collect(Collectors.toList());
     }
 }

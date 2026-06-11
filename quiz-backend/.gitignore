@@ -42,7 +42,7 @@ lombok.config
 .env
 
 # ====== Maven wrapper ======
-.mvn/wrapper/maven-wrapper.properties
+# .mvn/wrapper/maven-wrapper.properties
 
 # ====== GitHub Actions ======
 .github/

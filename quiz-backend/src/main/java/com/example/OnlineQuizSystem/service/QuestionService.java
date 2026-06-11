@@ -22,6 +22,7 @@ public class QuestionService {
     }
 
     public Question addQuestion(Question question) {
+        question.setQuiz(null);
         return r.save(question);
     }
 
