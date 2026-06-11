@@ -7,6 +7,7 @@ import com.example.OnlineQuizSystem.model.User;
 import com.example.OnlineQuizSystem.repository.UserRepository;
 import com.example.OnlineQuizSystem.security.JwtSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,13 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Value("${admin.email}")
+    private String adminEmail;
+
+    @Value("${admin.password}")
+    private String adminPassword;
+
     //register
     public String register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -36,6 +44,11 @@ public class UserService {
     }
     //login
     public AuthResponse login(LoginRequest request) {
+        if (adminEmail.equals(request.getEmail())) {
+            if (!adminPassword.equals(request.getPassword()))
+                throw new RuntimeException("Invalid admin password");
+            return new AuthResponse(jwtSecurity.generateToken(adminEmail, "ADMIN"), "ADMIN");
+        }
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
