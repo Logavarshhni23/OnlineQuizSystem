@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getQuestions, saveResult } from '../api'
 
-export default function Quiz({ token, userName, userEmail }) {
+export default function Quiz({ token, userName }) {
   const [questions, setQuestions] = useState([])
   const [current, setCurrent] = useState(0)
   const [selected, setSelected] = useState(null)
@@ -27,7 +27,7 @@ export default function Quiz({ token, userName, userEmail }) {
       setCurrent(current + 1)
       setSelected(null)
     } else {
-      await saveResult(token, userEmail, newScore, questions.length)
+      try { await saveResult(token, newScore, questions.length) } catch (e) { console.error('Failed to save result', e) }
       setFinished(true)
     }
   }

@@ -28,8 +28,8 @@ export async function getUsers(token) {
   return res.data
 }
 
-export async function saveResult(token, email, score, totalQuestions) {
-  const res = await api.post('/api/results/save', { email, score, totalQuestions }, { headers: authHeader(token) })
+export async function saveResult(token, score, totalQuestions) {
+  const res = await api.post('/api/results', { score, totalQuestions, submittedAt: new Date().toISOString() }, { headers: authHeader(token) })
   return res.data
 }
 
