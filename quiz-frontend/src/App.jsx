@@ -8,15 +8,17 @@ function App() {
   const [page, setPage] = useState('welcome')
   const [token, setToken] = useState(null)
   const [userName, setUserName] = useState('')
+  const [userEmail, setUserEmail] = useState('')
 
-  const handleLogin = (jwtToken, role, name) => {
+  const handleLogin = (jwtToken, role, name, email) => {
     setToken(jwtToken)
-    setPage(role === 'ADMIN' ? 'admin' : 'quiz')
     setUserName(name)
+    setUserEmail(email)
+    setPage(role === 'ADMIN' ? 'admin' : 'quiz')
   }
 
   if (page === 'login') return <Login onLogin={handleLogin} />
-  if (page === 'quiz') return <Quiz token={token} userName={userName} />
+  if (page === 'quiz') return <Quiz token={token} userName={userName} userEmail={userEmail} />
   if (page === 'admin') return <AdminDashboard token={token} />
 
   return (
