@@ -25,7 +25,7 @@ export default function Login({ onLogin }) {
         setPassword('')
       } else {
         const data = await loginUser(email.trim(), password.trim())
-        onLogin(data.token, data.role, data.name)
+        onLogin(data.token, data.role, data.name, email.trim())
       }
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Something went wrong')

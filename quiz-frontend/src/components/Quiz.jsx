@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { getQuestions } from '../api'
+import { getQuestions, saveResult } from '../api'
 
-export default function Quiz({ token, userName }) {
+export default function Quiz({ token, userName, userEmail }) {
   const [questions, setQuestions] = useState([])
   const [current, setCurrent] = useState(0)
   const [selected, setSelected] = useState(null)
@@ -17,15 +17,17 @@ export default function Quiz({ token, userName }) {
       .finally(() => setLoading(false))
   }, [token])
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const q = questions[current]
     const options = [q.optionA, q.optionB, q.optionC, q.optionD]
-    if (options[selected] === q.correctAnswer) setScore(score + 1)
+    const newScore = options[selected] === q.correctAnswer ? score + 1 : score
+    if (options[selected] === q.correctAnswer) setScore(newScore)
 
     if (current + 1 < questions.length) {
       setCurrent(current + 1)
       setSelected(null)
     } else {
+      await saveResult(token, userEmail, newScore, questions.length)
       setFinished(true)
     }
   }
@@ -39,9 +41,9 @@ export default function Quiz({ token, userName }) {
       <div className="quiz-page">
         <div className="quiz-box">
           <h2>Quiz Completed!</h2>
-          <p className="quiz-user">👤 {userName}</p>
+          <p className="quiz-user">{userName}</p>
           <p className="score">Your Score: {score} / {questions.length}</p>
-          <p className="quiz-count">{score === questions.length ? '🎉 Perfect Score!' : score >= questions.length / 2 ? '👍 Good Job!' : '📚 Keep Practicing!'}</p>
+          <p className="quiz-count">{score === questions.length ? 'Perfect Score!' : score >= questions.length / 2 ? 'Good Job!' : 'Keep Practicing!'}</p>
         </div>
       </div>
     )
@@ -53,7 +55,7 @@ export default function Quiz({ token, userName }) {
   return (
     <div className="quiz-page">
       <div className="quiz-box">
-        <p className="quiz-user">👤 {userName}</p>
+        <p className="quiz-user">{userName}</p>
         <p className="quiz-count">Question {current + 1} of {questions.length}</p>
         <h2>{q.questionText}</h2>
         <ul className="options">
